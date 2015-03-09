@@ -9,14 +9,14 @@ public class Room {
     private int level;
     private int placeNum;
     private double price;
-    private boolean avaliable;
+    private boolean available;
 
     public int getRoomNum() {
         return roomNum;
     }
 
-    public boolean isAvaliable() {
-        return avaliable;
+    public boolean isAvailable() {
+        return available;
     }
 
     public int getLevel() {
@@ -41,6 +41,6 @@ public class Room {
         this.level = level;
         this.placeNum = placeNum;
         this.price = price;
-        this.avaliable = avaliable;
+        this.available = avaliable;
     }
 }
