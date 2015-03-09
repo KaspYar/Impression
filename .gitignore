@@ -1,0 +1,8 @@
+*.class
+.idea/
+# Package Files #
+*.jar
+!lib/*.jar
+*.iml
+Impression.iml
+*.iml
