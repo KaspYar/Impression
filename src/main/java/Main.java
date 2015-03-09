@@ -1,3 +1,4 @@
+import Frame.MainFrame;
 import Hotel.Client.Client;
 import Model.ManagerDAO;
 import org.apache.log4j.BasicConfigurator;
@@ -15,5 +16,7 @@ public class Main {
         Client client = new Client(1, "Yaroslav","Kaspryshyn","kaspyar@yahoo.com","0678762423", "Ukraine");
         LOG.info(client.toString());
         ManagerDAO dao = ManagerDAO.getInstance();
+
+        MainFrame mf  = new MainFrame();
     }
 }
