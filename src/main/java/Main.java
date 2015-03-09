@@ -1,3 +1,4 @@
+import Frame.AddClientFrame;
 import Frame.MainFrame;
 import Hotel.Client.Client;
 import Model.ManagerDAO;
@@ -17,6 +18,7 @@ public class Main {
         LOG.info(client.toString());
         ManagerDAO dao = ManagerDAO.getInstance();
 
-        MainFrame mf  = new MainFrame();
+        //MainFrame mf  = new MainFrame();
+        //AddClientFrame addClientFrame = new AddClientFrame();
     }
 }
