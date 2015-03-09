@@ -14,7 +14,6 @@ public class Main {
         LOG.info("Hello world");
         Client client = new Client(1, "Yaroslav","Kaspryshyn","kaspyar@yahoo.com","0678762423", "Ukraine");
         LOG.info(client.toString());
-        ManagerDAO managerDAO = new ManagerDAO();
-        ManagerDAO managerDAO1 = new ManagerDAO();
+        ManagerDAO dao = ManagerDAO.getInstance();
     }
 }

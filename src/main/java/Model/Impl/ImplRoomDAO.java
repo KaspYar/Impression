@@ -1,8 +1,8 @@
 package Model.Impl;
 
 import Model.Intefaces.IRoomDAO;
+import org.apache.log4j.Logger;
 
-import java.util.logging.Logger;
 
 /**
  * Created by Slavko_O on 05.02.2015.
@@ -10,6 +10,6 @@ import java.util.logging.Logger;
 public class ImplRoomDAO implements IRoomDAO {
     Logger log = Logger.getLogger(ImplRoomDAO.class.toString());
     public ImplRoomDAO() {
-        log.info("ImplClientDAO constructor");
+        log.info("ImplRoomDAO constructor");
     }
 }
