@@ -6,6 +6,7 @@ package Hotel;
 public class Payment {
     private int idPayment;
     private int idBooking;
+    private int idCheckInOut;
     private double totalPrice;
 
     public int getIdPayment() {
@@ -20,10 +21,15 @@ public class Payment {
         return totalPrice;
     }
 
-    public Payment(int idPayment, int idBooking, double totalPrice) {
+    public int getIdCheckInOut() {
+        return idCheckInOut;
+    }
+
+    public Payment(int idPayment, int idBooking, int idCheckInOut, double totalPrice) {
 
         this.idPayment = idPayment;
         this.idBooking = idBooking;
+        this.idCheckInOut = idCheckInOut;
         this.totalPrice = totalPrice;
     }
 }
