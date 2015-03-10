@@ -13,11 +13,15 @@ import java.sql.SQLException;
  */
 public class ImplBookingDAO implements IBookingDAO {
     private static Logger log = Logger.getLogger(ImplBookingDAO.class.toString());
+    private Connection connection;
 
-    public ImplBookingDAO() {
+    public ImplBookingDAO(Connection connection) {
         log.info("ImplBookingDAO constructor");
+        this.connection = connection;
+
     }
-    public void cancelBooking(Booking booking, Connection connection) throws SQLException {
+
+    public void cancelBooking(Booking booking) throws SQLException {
         log.info("cancelBooking: "+ booking.getIdBooking());
         String query = "DELETE FROM booking WHERE idBooking = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);

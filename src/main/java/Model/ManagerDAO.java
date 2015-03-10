@@ -26,10 +26,10 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     private static Logger log = Logger.getLogger(ManagerDAO.class.toString());
     private static ManagerDAO instance = null;
     private Connection connection;
-    private IClientDAO clientDAO = new ImplClientDAO();
-    private IRoomDAO roomDAO = new ImplRoomDAO();
-    private IBookingDAO bookingDAO= new ImplBookingDAO();
-    private IPaymentDAO paymentDAO= new ImplPaymentDAO();
+    private IClientDAO clientDAO;
+    private IRoomDAO roomDAO;
+    private IBookingDAO bookingDAO;
+    private IPaymentDAO paymentDAO;
 
     private ManagerDAO() {
         log.info("ManagerDAO Constructor");
@@ -41,38 +41,28 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
         } catch (SQLException e) {
             log.error("Can't connect to database: " + e.toString());
         }
+        clientDAO = new ImplClientDAO(connection);
+        roomDAO = new ImplRoomDAO(connection);
+        bookingDAO = new ImplBookingDAO(connection);
+        paymentDAO = new ImplPaymentDAO(connection);
     }
 
     public static ManagerDAO getInstance() {
         if (instance == null) instance = new ManagerDAO();
         return instance;
     }
-
+    @Override
     public void setRoomFree(Room room) throws SQLException {
-        this.setRoomFree(room, connection);
+        this.roomDAO.setRoomFree(room);
         return;
     }
     @Override
-    public void setRoomFree(Room room, Connection connection) throws SQLException {
-        roomDAO.setRoomFree(room, connection);
-        return;
-    }
-
     public void cancelBooking(Booking booking) throws SQLException {
-        this.cancelBooking(booking, connection);
+        this.bookingDAO.cancelBooking(booking);
         return;
     }
     @Override
-    public void cancelBooking(Booking booking, Connection connection) throws SQLException {
-        bookingDAO.cancelBooking(booking, connection);
-        return;
-    }
-
     public List<Payment> getPayment(Client client) throws SQLException {
-        return this.getPayment(client,connection);
-    }
-    @Override
-    public List<Payment> getPayment(Client client, Connection connection) throws SQLException {
-        return paymentDAO.getPayment(client,connection);
+        return this.paymentDAO.getPayment(client);
     }
 }

@@ -17,12 +17,14 @@ import java.util.List;
  */
 public class ImplPaymentDAO implements IPaymentDAO {
     private static Logger log = Logger.getLogger(ImplPaymentDAO.class.toString());
+    private Connection connection;
 
-    public ImplPaymentDAO() {
+    public ImplPaymentDAO(Connection connection) {
         log.info("ImplPaymentDAO constructor");
+        this.connection = connection;
     }
     @Override
-    public List<Payment> getPayment(Client client, Connection connection) throws SQLException {
+    public List<Payment> getPayment(Client client) throws SQLException {
         ArrayList<Payment> result = new ArrayList<Payment>();
         log.info("getPayment idClient: "+ client.getClientCard());
         String query = "SELECT * FROM payment WHERE idBooking IN (SELECT idBooking FROM booking WHERE clientCard = ?) ORDER BY idPayment DESC";

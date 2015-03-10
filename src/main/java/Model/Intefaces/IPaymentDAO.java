@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Slavko_O on 10.03.2015.
  */
 public interface IPaymentDAO {
-    public List<Payment> getPayment(Client client, Connection connection) throws SQLException;
+    public List<Payment> getPayment(Client client) throws SQLException;
 }

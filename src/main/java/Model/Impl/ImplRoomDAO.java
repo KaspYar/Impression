@@ -14,10 +14,12 @@ import java.sql.SQLException;
  */
 public class ImplRoomDAO implements IRoomDAO {
     Logger log = Logger.getLogger(ImplRoomDAO.class.toString());
-    public ImplRoomDAO() {
+    private Connection connection;
+    public ImplRoomDAO(Connection connection) {
         log.info("ImplRoomDAO constructor");
+        this.connection = connection;
     }
-    public void setRoomFree(Room room, Connection connection) throws SQLException {
+    public void setRoomFree(Room room) throws SQLException {
         log.info("setRoomFree: "+ room.getRoomNum());
         String query = "UPDATE room SET available = ? WHERE roomNum = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
