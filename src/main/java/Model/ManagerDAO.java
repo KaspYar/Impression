@@ -61,6 +61,12 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
         this.bookingDAO.cancelBooking(booking);
         return;
     }
+
+    @Override
+    public List<Booking> getPaymentBooking(Client client) throws SQLException {
+        return this.bookingDAO.getPaymentBooking(client);
+    }
+
     @Override
     public List<Payment> getPayment(Client client) throws SQLException {
         return this.paymentDAO.getPayment(client);

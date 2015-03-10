@@ -1,12 +1,17 @@
 package Model.Impl;
 
 import Hotel.Booking;
+import Hotel.Client;
+import Hotel.Payment;
 import Model.Intefaces.IBookingDAO;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Slavko_O on 09.03.2015.
@@ -32,5 +37,22 @@ public class ImplBookingDAO implements IBookingDAO {
             log.error("No booking with id: "+ booking.getIdBooking());
         }
         return;
+    }
+
+    @Override
+    public List<Booking> getPaymentBooking(Client client) throws SQLException {
+        ArrayList<Booking> result = new ArrayList<Booking>();
+        log.info("getPaymentBooking idClient: "+ client.getClientCard());
+        String query = "SELECT * FROM payment WHERE idCheckInOut IN (SELECT idCheckInOut FROM booking WHERE clientCard = ?) ORDER BY idPayment DESC";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, client.getClientCard());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            //Booking(int idBooking, int clientCard, Date dateFrom, Date dateTo)
+            result.add(new Booking(
+                    resultSet.getInt("idBooking"), resultSet.getInt("clientCard"),
+                    resultSet.getDate("dateFrom"), resultSet.getDate("dateTo")));
+        }
+        return result;
     }
 }

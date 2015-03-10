@@ -32,7 +32,10 @@ public class ImplPaymentDAO implements IPaymentDAO {
         preparedStatement.setInt(1, client.getClientCard());
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            result.add(new Payment(resultSet.getInt(1), resultSet.getInt(2), resultSet.getDouble(3)));
+            //Payment(int idPayment, int idBooking, int idCheckInOut, double totalPrice)
+           result.add(new Payment(
+                   resultSet.getInt("idPayment"), resultSet.getInt("idBooking"),
+                   resultSet.getInt("idCheckInOut"), resultSet.getDouble("totalPrice")));
         }
         return result;
     }
