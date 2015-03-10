@@ -56,6 +56,12 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
         this.roomDAO.setRoomFree(room);
         return;
     }
+
+    @Override
+    public List<Room> getFreeRooms() throws SQLException {
+        return roomDAO.getFreeRooms();
+    }
+
     @Override
     public void cancelBooking(Booking booking) throws SQLException {
         this.bookingDAO.cancelBooking(booking);

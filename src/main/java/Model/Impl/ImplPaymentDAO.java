@@ -27,15 +27,18 @@ public class ImplPaymentDAO implements IPaymentDAO {
     public List<Payment> getPayment(Client client) throws SQLException {
         ArrayList<Payment> result = new ArrayList<Payment>();
         log.info("getPayment idClient: "+ client.getClientCard());
-        String query = "SELECT * FROM payment WHERE idBooking IN (SELECT idBooking FROM booking WHERE clientCard = ?) ORDER BY idPayment DESC";
+        String query = "SELECT P.idPayment, P.idBooking, P.idCheckInOut, P.totalPrice, R.roomNum " +
+                "FROM payment P INNER JOIN (checkInOut C INNER JOIN room R ON C.roomNum = R.roomNum ) ON P.idCheckInOut = C.idCheckInOut\n" +
+                "WHERE C.clientCard = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, client.getClientCard());
         ResultSet resultSet = preparedStatement.executeQuery();
+        Payment payment = null;
         while (resultSet.next()){
-            //Payment(int idPayment, int idBooking, int idCheckInOut, double totalPrice)
-           result.add(new Payment(
-                   resultSet.getInt("idPayment"), resultSet.getInt("idBooking"),
-                   resultSet.getInt("idCheckInOut"), resultSet.getDouble("totalPrice")));
+            payment = new Payment(
+                    resultSet.getInt("idPayment"), resultSet.getInt("idBooking"),
+                    resultSet.getInt("idCheckInOut"), resultSet.getDouble("totalPrice"), resultSet.getInt("roomNum"));
+           result.add(payment);
         }
         return result;
     }

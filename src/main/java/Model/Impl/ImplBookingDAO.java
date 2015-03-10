@@ -43,12 +43,14 @@ public class ImplBookingDAO implements IBookingDAO {
     public List<Booking> getPaymentBooking(Client client) throws SQLException {
         ArrayList<Booking> result = new ArrayList<Booking>();
         log.info("getPaymentBooking idClient: "+ client.getClientCard());
-        String query = "SELECT * FROM payment WHERE idCheckInOut IN (SELECT idCheckInOut FROM booking WHERE clientCard = ?) ORDER BY idPayment DESC";
+        String query = "SELECT * " +
+                "FROM payment P INNER JOIN booking B ON P.idBooking = B.idBooking " +
+                "WHERE B.clientCard = ? " +
+                "ORDER BY P.idPayment DESC ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, client.getClientCard());
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            //Booking(int idBooking, int clientCard, Date dateFrom, Date dateTo)
             result.add(new Booking(
                     resultSet.getInt("idBooking"), resultSet.getInt("clientCard"),
                     resultSet.getDate("dateFrom"), resultSet.getDate("dateTo")));

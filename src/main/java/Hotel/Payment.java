@@ -8,6 +8,11 @@ public class Payment {
     private int idBooking;
     private int idCheckInOut;
     private double totalPrice;
+    private int roomNum;
+
+    public int getRoomNum() {
+        return roomNum;
+    }
 
     public int getIdPayment() {
         return idPayment;
@@ -23,6 +28,14 @@ public class Payment {
 
     public int getIdCheckInOut() {
         return idCheckInOut;
+    }
+
+    public Payment(int idPayment, int idBooking, int idCheckInOut, double totalPrice, int roomNum) {
+        this.idPayment = idPayment;
+        this.idBooking = idBooking;
+        this.idCheckInOut = idCheckInOut;
+        this.totalPrice = totalPrice;
+        this.roomNum = roomNum;
     }
 
     public Payment(int idPayment, int idBooking, int idCheckInOut, double totalPrice) {
