@@ -26,7 +26,7 @@ public class ImplRoomDAO implements IRoomDAO {
         log.info("setRoomFree: "+ room.getRoomNum());
         String query = "UPDATE room SET available = ? WHERE roomNum = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1,0);
+        preparedStatement.setInt(1,1);
         preparedStatement.setInt(2, room.getRoomNum());
 
         int count = preparedStatement.executeUpdate();
@@ -37,12 +37,12 @@ public class ImplRoomDAO implements IRoomDAO {
     }
 
     @Override
-    public List<Room> getFreeRooms() throws SQLException {
+    public List<Room> getRooms(boolean available) throws SQLException {
         log.info("getFreeRooms");
         ArrayList<Room> result = new ArrayList<Room>();
         String query = "SELECT * FROM ROOM WHERE available = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1,1);
+        preparedStatement.setInt(1,available?1:0);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {

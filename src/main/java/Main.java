@@ -17,6 +17,6 @@ public class Main {
         MainFrame mf  = new MainFrame();
         Controller controller = new Controller(mf);
         //AddClientFrame addClientFrame = new AddClientFrame();
-        //GetPaymentFrame getAvaliable = new GetPaymentFrame();
+        //SetFreeFrame getAvaliable = new SetFreeFrame();
     }
 }

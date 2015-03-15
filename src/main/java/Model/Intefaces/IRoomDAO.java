@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface IRoomDAO {
     public void setRoomFree(Room room) throws SQLException;
-    public List<Room> getFreeRooms() throws  SQLException;
+    public List<Room> getRooms(boolean available) throws  SQLException;
 }
