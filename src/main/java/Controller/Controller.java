@@ -3,6 +3,7 @@ package Controller;
 import Frame.AddClientFrame;
 import Frame.SetFreeFrame;
 import Frame.MainFrame;
+import Frame.SettleClientFrame;
 import Hotel.Room;
 import Model.ManagerDAO;
 import config.ConfigurationHotel;
@@ -21,6 +22,7 @@ public class Controller {
 
     private MainFrame frame;
     private SetFreeFrame setFreeFrame;
+    private SettleClientFrame settleClientFrame;
     private AddClientFrame addClientFrame;
 
     public Controller(MainFrame mc) {
@@ -46,6 +48,11 @@ public class Controller {
                 log.info("addClient pressed");
                 addClientFrame = new AddClientFrame();
             }
+            if (source == frame.getBtnSettleClient()) {
+                settleClientFrame = new SettleClientFrame();
+            }
+
+
         }
 
     }

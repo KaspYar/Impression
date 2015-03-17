@@ -77,4 +77,19 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     public List<Payment> getPayment(Client client) throws SQLException {
         return this.paymentDAO.getPayment(client);
     }
+
+    @Override
+    public void addClient(Client client) {
+        this.clientDAO.addClient(client);
+    }
+
+    @Override
+    public List<Client> getAllClients() {
+        return this.clientDAO.getAllClients();
+    }
+
+    @Override
+    public ResultSet getAllClientsResultSet() {
+        return this.clientDAO.getAllClientsResultSet();
+    }
 }

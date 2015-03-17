@@ -12,7 +12,7 @@ public class MainFrame extends JFrame{
     private JLabel hotelNameLbl;
     private JPanel rootPane;
     private JButton btnSetFree;
-    private JButton button2;
+    private JButton btnSettleClient;
     private JButton btnAddClient;
     private JButton button1;
     private JButton button3;
@@ -33,9 +33,14 @@ public class MainFrame extends JFrame{
     public void addListener(ActionListener l) {
         btnAddClient.addActionListener(l);
         btnSetFree.addActionListener(l);
+        btnSettleClient.addActionListener(l);
     }
     public JButton getBtnSetFree() {
         return btnSetFree;
+    }
+
+    public JButton getBtnSettleClient(){
+        return btnSettleClient;
     }
 
     public JButton getBtnAddClient() {
