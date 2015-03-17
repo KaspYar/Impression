@@ -1,9 +1,7 @@
 package Controller;
 
-import Frame.AddClientFrame;
-import Frame.SetFreeFrame;
-import Frame.MainFrame;
-import Frame.SettleClientFrame;
+import Frame.*;
+import Hotel.Client;
 import Hotel.Room;
 import Model.ManagerDAO;
 import config.ConfigurationHotel;
@@ -24,6 +22,7 @@ public class Controller {
     private SetFreeFrame setFreeFrame;
     private SettleClientFrame settleClientFrame;
     private AddClientFrame addClientFrame;
+    private ChoosePaymentFrame choosePaymentFrame;
 
     public Controller(MainFrame mc) {
         this.frame = mc;
@@ -51,10 +50,40 @@ public class Controller {
             if (source == frame.getBtnSettleClient()) {
                 settleClientFrame = new SettleClientFrame();
             }
+            if (source == frame.getBtnPayments()){
+                log.info("get payments");
+                try {
+                    choosePaymentFrame = new  ChoosePaymentFrame((ArrayList<Client>)ManagerDAO.getInstance().getAllClients());
+                } catch (SQLException e1) {
+                    log.warning("Can't get all clients");
+                }
+                choosePaymentFrame.addListener(new choosePaymentFrameListener());
+            }
 
 
         }
 
+    }
+    private class choosePaymentFrameListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object source = e.getSource();
+            if (source == choosePaymentFrame.getBtnChooseClient()){
+                log.info("choose client");
+
+            }
+            if (source == choosePaymentFrame.getComboBoxSelectClient()){
+                log.info("Client choosed");
+                int idSelectedClient = choosePaymentFrame.getComboBoxSelectClient().getSelectedIndex();
+                Client clientSelected =  choosePaymentFrame.getLst().get(idSelectedClient);
+                try {
+                    choosePaymentFrame.initModelSource(ManagerDAO.getInstance().getPaymentResultSet(clientSelected));
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
     }
     private class SetFreeFrameListener implements ActionListener{
 

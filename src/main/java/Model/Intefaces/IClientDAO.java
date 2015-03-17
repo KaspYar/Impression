@@ -3,6 +3,7 @@ package Model.Intefaces;
 import Hotel.Client;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ import java.util.List;
 public interface IClientDAO {
 
     void addClient(Client client);
-    List<Client> getAllClients();
+    List<Client> getAllClients()throws SQLException;
     ResultSet getAllClientsResultSet();
+    ResultSet getPaymentResultSet(Client client) throws SQLException;
 }

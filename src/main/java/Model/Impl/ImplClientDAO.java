@@ -50,7 +50,7 @@ public class ImplClientDAO implements IClientDAO {
     }
 
     @Override
-    public List<Client> getAllClients() {
+    public List<Client> getAllClients() throws SQLException{
 
         String query = "SELECT clientCard,firstname,lastname,organization,email FROM Client";
         PreparedStatement st = null;
@@ -70,9 +70,7 @@ public class ImplClientDAO implements IClientDAO {
                 //client.setPassword(rs.getString(6));
                 clientList.add(client);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
+        }  finally {
             try {
                 if(st != null) st.close();
                 if(rs != null) rs.close();
@@ -95,6 +93,17 @@ public class ImplClientDAO implements IClientDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return rs;
+    }
+
+    @Override
+    public ResultSet getPaymentResultSet(Client client) throws  SQLException{
+        String query = "SELECT * FROM Payment WHERE idBooking IN (SELECT B.idBooking FROM Booking B INNER JOIN Client C ON B.clientCard = C.clientCard WHERE B.clientCard = ?)";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+            st = connection.prepareStatement(query);
+        st.setInt(1, client.getClientCard());
+            rs = st.executeQuery();
         return rs;
     }
 }

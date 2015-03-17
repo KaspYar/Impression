@@ -14,7 +14,7 @@ public class MainFrame extends JFrame{
     private JButton btnSetFree;
     private JButton btnSettleClient;
     private JButton btnAddClient;
-    private JButton button1;
+    private JButton btnPayments;
     private JButton button3;
     private JButton button4;
 
@@ -34,6 +34,7 @@ public class MainFrame extends JFrame{
         btnAddClient.addActionListener(l);
         btnSetFree.addActionListener(l);
         btnSettleClient.addActionListener(l);
+        btnPayments.addActionListener(l);
     }
     public JButton getBtnSetFree() {
         return btnSetFree;
@@ -46,5 +47,9 @@ public class MainFrame extends JFrame{
     public JButton getBtnAddClient() {
 
         return btnAddClient;
+    }
+
+    public JButton getBtnPayments() {
+        return btnPayments;
     }
 }
