@@ -4,5 +4,4 @@
 *.jar
 !lib/*.jar
 *.iml
-Impression.iml
-*.iml
+target/
