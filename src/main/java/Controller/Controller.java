@@ -23,6 +23,7 @@ public class Controller {
     private SettleClientFrame settleClientFrame;
     private AddClientFrame addClientFrame;
     private ChoosePaymentFrame choosePaymentFrame;
+    private FreeRoomForToday freeRoomForToday;
 
     public Controller(MainFrame mc) {
         this.frame = mc;
@@ -59,10 +60,39 @@ public class Controller {
                 }
                 choosePaymentFrame.addListener(new choosePaymentFrameListener());
             }
+            if (source == frame.getBtnGetFree()){
+                log.info("get free");
+                try {
+                    freeRoomForToday = new FreeRoomForToday((ArrayList<Room>)ManagerDAO.getInstance().getRooms(ConfigurationHotel.available));
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+
+                freeRoomForToday.addListener( new freeRoomForTodayListener());
+                log.info("end");
+            }
 
 
         }
 
+    }
+    private class freeRoomForTodayListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object source = e.getSource();
+
+            if (source == freeRoomForToday.getComboBox1()){
+                Room selectedRoom = (Room) freeRoomForToday.getLst().get(freeRoomForToday.getComboBox1().getSelectedIndex());
+                        freeRoomForToday.getTextArea1().setText(
+                        "Room #" + selectedRoom.getRoomNum()+
+                                "\nLevel: "+selectedRoom.getLevel()+
+                                "\nRoom type: "+selectedRoom.getRoomType()+
+                                "\nPrice: "+selectedRoom.getPrice()+"$"
+                );
+
+            }
+        }
     }
     private class choosePaymentFrameListener implements ActionListener{
 

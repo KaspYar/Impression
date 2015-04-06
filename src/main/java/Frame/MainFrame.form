@@ -48,12 +48,12 @@
           <text value="Get Payments"/>
         </properties>
       </component>
-      <component id="f1b59" class="javax.swing.JButton" binding="button3" default-binding="true">
+      <component id="f1b59" class="javax.swing.JButton" binding="btnGetFree">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="Get Free Rooms"/>
         </properties>
       </component>
       <component id="d484c" class="javax.swing.JButton" binding="button4" default-binding="true">
