@@ -98,7 +98,9 @@ public class ImplClientDAO implements IClientDAO {
 
     @Override
     public ResultSet getPaymentResultSet(Client client) throws  SQLException{
-        String query = "SELECT * FROM Payment WHERE idBooking IN (SELECT B.idBooking FROM Booking B INNER JOIN Client C ON B.clientCard = C.clientCard WHERE B.clientCard = ?)";
+        String query = "SELECT B.clientCard AS 'Client Card', BR.roomNum AS 'Room #', P.totalPrice AS 'Price', B.dateFrom AS 'From', B.dateTo AS 'To' " +
+                "FROM (Payment P INNER JOIN Booking B ON P.idBooking = B.idBooking) INNER JOIN bookingroom BR ON B.idBooking = BR.idBooking " +
+                "WHERE P.idBooking IN (?)";
         PreparedStatement st = null;
         ResultSet rs = null;
             st = connection.prepareStatement(query);
