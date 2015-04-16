@@ -131,7 +131,11 @@ public class Controller {
             if (source == choosePaymentFrame.getBtnChooseClientsPayment()){
                 log.info("choose client");
                 log.info("Row# "+choosePaymentFrame.getTableClientPayments().getSelectedRow());
-                log.info(""+choosePaymentFrame.getTableClientPayments().convertRowIndexToModel(0));
+                String res  = "";
+                for(int i=0;i<choosePaymentFrame.getModel().getColumnCount();i++) {
+                    res+=choosePaymentFrame.getModel().getValueAt(choosePaymentFrame.getTableClientPayments().getSelectedRow(), i)+" ";
+                }
+                log.info(res);
 
             }
             if (source == choosePaymentFrame.getComboBoxSelectClient()){
