@@ -56,4 +56,46 @@ public class ImplRoomDAO implements IRoomDAO {
         }
         return result;
     }
+
+    @Override
+    public ResultSet getRoomsResultSet(boolean available){
+        log.info("getFreeRooms");
+        String query = "SELECT * FROM ROOM WHERE available = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,available?1:0);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    @Override
+    public Room getRoomByNum(int roomNum) {
+        Room room = null;
+        String query = "SELECT * FROM Room WHERE roomNum = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roomNum);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                room = new Room(
+                        resultSet.getInt("roomNum"),
+                        resultSet.getString("roomType"),
+                        resultSet.getInt("level"),
+                        resultSet.getInt("place_num"),
+                        resultSet.getDouble("price"),
+                        resultSet.getBoolean("available"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return room;
+    }
 }

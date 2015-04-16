@@ -43,4 +43,16 @@ public class Room {
         this.price = price;
         this.available = avaliable;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomNum=" + roomNum +
+                ", roomType='" + roomType + '\'' +
+                ", level=" + level +
+                ", placeNum=" + placeNum +
+                ", price=" + price +
+                ", available=" + available +
+                '}';
+    }
 }

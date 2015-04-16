@@ -6,6 +6,7 @@ import Hotel.Room;
 import Model.ManagerDAO;
 import config.ConfigurationHotel;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -24,6 +25,7 @@ public class Controller {
     private AddClientFrame addClientFrame;
     private ChoosePaymentFrame choosePaymentFrame;
     private FreeRoomForToday freeRoomForToday;
+    private FreeRoomsFrame freeRoomsFrame;
 
     public Controller(MainFrame mc) {
         this.frame = mc;
@@ -50,6 +52,7 @@ public class Controller {
             }
             if (source == frame.getBtnSettleClient()) {
                 settleClientFrame = new SettleClientFrame();
+                settleClientFrame.addListener(new assignClientToRoom());
             }
             if (source == frame.getBtnPayments()){
                 log.info("get payments");
@@ -94,6 +97,32 @@ public class Controller {
             }
         }
     }
+
+    private class assignClientToRoom implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object src = e.getSource();
+            if(src == settleClientFrame.getBtnAssignRoom()){
+                freeRoomsFrame = new FreeRoomsFrame();
+                freeRoomsFrame.getBtnApply().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Client client = ManagerDAO.getInstance().getClientByID(settleClientFrame.getSelectedID());
+                        System.out.println(client);
+                        Room room = ManagerDAO.getInstance().getRoomByNum(freeRoomsFrame.getSelectedID());
+                        System.out.println(room);
+                        ManagerDAO.getInstance().addClientToRoom(client, room);
+                        JOptionPane.showMessageDialog(freeRoomsFrame,client.getFirstname() + " " + client.getLastname()
+                        + " settled","Client settled", JOptionPane.INFORMATION_MESSAGE);
+                        freeRoomsFrame.dispose();
+                        settleClientFrame.dispose();
+                    }
+                });
+            }
+        }
+    }
+
     private class choosePaymentFrameListener implements ActionListener{
 
         @Override

@@ -1,14 +1,13 @@
 package Model.Impl;
 
 import Hotel.Client;
+import Hotel.Room;
 import Model.Intefaces.IClientDAO;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -106,4 +105,65 @@ public class ImplClientDAO implements IClientDAO {
             rs = st.executeQuery();
         return rs;
     }
+
+    @Override
+    public Client getClientByID(int clientID) {
+
+        String query = "SELECT clientCard,firstname,lastname,organization,email FROM Client WHERE clientCard=?";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Client client = null;
+        try {
+            st = connection.prepareStatement(query);
+            st.setInt(1,clientID);
+            rs = st.executeQuery();
+
+            while (rs.next()){
+                client = new Client();
+                client.setClientCard(rs.getInt(1));
+                client.setFirstname(rs.getString(2));
+                client.setLastname(rs.getString(3));
+                client.setOrganization(rs.getString(4));
+                client.setEmail(rs.getString(5));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(st != null) st.close();
+                if(rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return client;
+    }
+
+    @Override
+    public void addClientToRoom(Client client, Room room) {
+        String query = "INSERT INTO CheckInOut(clientCard, roomNum, checkInDate) VALUES(?,?,?)";
+        String updateQuery = "UPDATE Room SET available = ? WHERE roomNum = ?";
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement(query);
+            st.setInt(1, client.getClientCard());
+            st.setInt(2, room.getRoomNum());
+            st.setDate(3, new Date(System.currentTimeMillis()));
+            st.execute();
+            log.info("Client added to room");
+            st = connection.prepareStatement(updateQuery);
+            st.setBoolean(1,false);
+            st.setInt(2,room.getRoomNum());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

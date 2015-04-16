@@ -72,4 +72,15 @@ public class Client {
         return email;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "clientCard=" + clientCard +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", organization='" + organization + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

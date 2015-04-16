@@ -63,6 +63,16 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     }
 
     @Override
+    public ResultSet getRoomsResultSet(boolean available) {
+        return roomDAO.getRoomsResultSet(available);
+    }
+
+    @Override
+    public Room getRoomByNum(int roomNum) {
+        return roomDAO.getRoomByNum(roomNum);
+    }
+
+    @Override
     public void cancelBooking(Booking booking) throws SQLException {
         this.bookingDAO.cancelBooking(booking);
         return;
@@ -92,8 +102,19 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     public ResultSet getAllClientsResultSet() {
         return this.clientDAO.getAllClientsResultSet();
     }
+
     @Override
     public ResultSet getPaymentResultSet(Client client) throws  SQLException{
         return this.clientDAO.getPaymentResultSet(client);
+    }
+
+    @Override
+    public Client getClientByID(int clientID) {
+        return clientDAO.getClientByID(clientID);
+    }
+
+    @Override
+    public void addClientToRoom(Client client, Room room) {
+        clientDAO.addClientToRoom(client,room);
     }
 }
