@@ -138,8 +138,14 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-            if (source == choosePaymentFrame.getBtnChooseClient()){
+            if (source == choosePaymentFrame.getBtnChooseClientsPayment()){
                 log.info("choose client");
+                log.info("Row# "+choosePaymentFrame.getTableClientPayments().getSelectedRow());
+                String res  = "";
+                for(int i=0;i<choosePaymentFrame.getModel().getColumnCount();i++) {
+                    res+=choosePaymentFrame.getModel().getValueAt(choosePaymentFrame.getTableClientPayments().getSelectedRow(), i)+" ";
+                }
+                log.info(res);
 
             }
             if (source == choosePaymentFrame.getComboBoxSelectClient()){
