@@ -128,8 +128,10 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-            if (source == choosePaymentFrame.getBtnChooseClient()){
+            if (source == choosePaymentFrame.getBtnChooseClientsPayment()){
                 log.info("choose client");
+                log.info("Row# "+choosePaymentFrame.getTableClientPayments().getSelectedRow());
+                log.info(""+choosePaymentFrame.getTableClientPayments().convertRowIndexToModel(0));
 
             }
             if (source == choosePaymentFrame.getComboBoxSelectClient()){

@@ -2,7 +2,6 @@ package Frame;
 
 import Hotel.Client;
 import Model.GUI.DatabaseTableModel;
-import Model.ManagerDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +17,14 @@ public class ChoosePaymentFrame extends JFrame {
     private JPanel rootPane;
     private JLabel lblSetClient;
     private JComboBox comboBoxSelectClient;
-    private JButton btnChooseClient;
+    private JButton btnChooseClientsPayment;
     private JTable tableClientPayments;
     private ArrayList<Client> lst;
     private DatabaseTableModel model;
+
+    public DatabaseTableModel getModel() {
+        return model;
+    }
 
     public ChoosePaymentFrame(ArrayList<Client> lst){
         super("Hotel");
@@ -41,7 +44,7 @@ public class ChoosePaymentFrame extends JFrame {
     }
     public void addListener(ActionListener l) {
         comboBoxSelectClient.addActionListener(l);
-        btnChooseClient.addActionListener(l);
+        btnChooseClientsPayment.addActionListener(l);
     }
     private void createUIComponents() {
         for(Client s: lst) {
@@ -62,12 +65,15 @@ public class ChoosePaymentFrame extends JFrame {
         return comboBoxSelectClient;
     }
 
-    public JButton getBtnChooseClient() {
-        return btnChooseClient;
+    public JButton getBtnChooseClientsPayment() {
+        return btnChooseClientsPayment;
     }
 
     public ArrayList<Client> getLst() {
         return lst;
     }
 
+    public JTable getTableClientPayments() {
+        return tableClientPayments;
+    }
 }
