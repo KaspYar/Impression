@@ -18,8 +18,8 @@ public class ChoosePaymentFrame extends JFrame {
     private JPanel rootPane;
     private JLabel lblSetClient;
     private JComboBox comboBoxSelectClient;
-    private JTable tableClientPayments;
     private JButton btnChooseClient;
+    private JTable tableClientPayments;
     private ArrayList<Client> lst;
     private DatabaseTableModel model;
 
