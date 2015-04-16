@@ -142,21 +142,55 @@ public class ImplClientDAO implements IClientDAO {
     }
 
     @Override
-    public void addClientToRoom(Client client, Room room) {
-        String query = "INSERT INTO CheckInOut(clientCard, roomNum, checkInDate) VALUES(?,?,?)";
-        String updateQuery = "UPDATE Room SET available = ? WHERE roomNum = ?";
+    public void addClientToRoom(Client client, Room room, int days) {
+        String insertCheckInOut = "INSERT INTO CheckInOut(clientCard, roomNum, checkInDate) VALUES(?,?,?)";
+        String updateRoom = "UPDATE Room SET available = ? WHERE roomNum = ?";
+        String insertBooking = "INSERT INTO Booking(clientCard, dateFrom, dateTo) VALUES(?,?,?)";
+        String insertBookingRoom = "INSERT INTO BookingRoom(idBooking, roomNum) VALUES(?,?)";
+        String insertPayment = "INSERT INTO Payment(idBooking, idCheckInOut, totalPrice) VALUES(?,?,?)";
         PreparedStatement st = null;
+        ResultSet rs = null;
+        int idBooking=0;
+        int idCheckInOut=0;
         try {
-            st = connection.prepareStatement(query);
+            Date current = new Date(System.currentTimeMillis());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(current);
+            cal.add(Calendar.DATE, days);
+
+            st = connection.prepareStatement(insertBooking,Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, client.getClientCard());
+            st.setDate(2, current);
+            st.setDate(3, new java.sql.Date(cal.getTimeInMillis()));
+            st.execute();
+            rs = st.getGeneratedKeys();
+            if(rs.next())
+                idBooking = rs.getInt(1);
+
+            st = connection.prepareStatement(insertCheckInOut,Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, client.getClientCard());
             st.setInt(2, room.getRoomNum());
-            st.setDate(3, new Date(System.currentTimeMillis()));
+            st.setDate(3, current);
             st.execute();
-            log.info("Client added to room");
-            st = connection.prepareStatement(updateQuery);
-            st.setBoolean(1,false);
-            st.setInt(2,room.getRoomNum());
+            rs = st.getGeneratedKeys();
+            if(rs.next())
+                idCheckInOut = rs.getInt(1);
+
+            st = connection.prepareStatement(insertBookingRoom);
+            st.setInt(1, idBooking);
+            st.setInt(2, room.getRoomNum());
+            st.execute();
+
+            st = connection.prepareStatement(updateRoom);
+            st.setBoolean(1, false);
+            st.setInt(2, room.getRoomNum());
             st.executeUpdate();
+
+            st = connection.prepareStatement(insertPayment);
+            st.setInt(1, idBooking);
+            st.setInt(2, idCheckInOut);
+            st.setDouble(3, room.getPrice() * days);
+            st.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

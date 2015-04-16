@@ -17,5 +17,5 @@ public interface IClientDAO {
     ResultSet getAllClientsResultSet();
     ResultSet getPaymentResultSet(Client client) throws SQLException;
     Client getClientByID(int clientID);
-    void addClientToRoom(Client client, Room room);
+    void addClientToRoom(Client client, Room room, int days);
 }

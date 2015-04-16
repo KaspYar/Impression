@@ -114,7 +114,7 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     }
 
     @Override
-    public void addClientToRoom(Client client, Room room) {
-        clientDAO.addClientToRoom(client,room);
+    public void addClientToRoom(Client client, Room room, int days) {
+        clientDAO.addClientToRoom(client,room,days);
     }
 }

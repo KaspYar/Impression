@@ -16,7 +16,7 @@ public class MainFrame extends JFrame{
     private JButton btnAddClient;
     private JButton btnPayments;
     private JButton btnGetFree;
-    private JButton button4;
+    private JButton roomBooking;
 
     public MainFrame(){
         super("Hotel \"Impression\"");

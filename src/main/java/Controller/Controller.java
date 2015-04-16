@@ -26,6 +26,7 @@ public class Controller {
     private ChoosePaymentFrame choosePaymentFrame;
     private FreeRoomForToday freeRoomForToday;
     private FreeRoomsFrame freeRoomsFrame;
+    private DaysFrame daysFrame;
 
     public Controller(MainFrame mc) {
         this.frame = mc;
@@ -100,25 +101,34 @@ public class Controller {
 
     private class assignClientToRoom implements ActionListener{
 
+        private int days;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
             if(src == settleClientFrame.getBtnAssignRoom()){
-                freeRoomsFrame = new FreeRoomsFrame();
-                freeRoomsFrame.getBtnApply().addActionListener(new ActionListener() {
+                daysFrame = new DaysFrame();
+                daysFrame.getBtnChoose().addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Client client = ManagerDAO.getInstance().getClientByID(settleClientFrame.getSelectedID());
-                        System.out.println(client);
-                        Room room = ManagerDAO.getInstance().getRoomByNum(freeRoomsFrame.getSelectedID());
-                        System.out.println(room);
-                        ManagerDAO.getInstance().addClientToRoom(client, room);
-                        JOptionPane.showMessageDialog(freeRoomsFrame,client.getFirstname() + " " + client.getLastname()
-                        + " settled","Client settled", JOptionPane.INFORMATION_MESSAGE);
-                        freeRoomsFrame.dispose();
-                        settleClientFrame.dispose();
+                        freeRoomsFrame = new FreeRoomsFrame();
+                        days = (Integer)daysFrame.getSpinnerDays().getValue();
+                        daysFrame.dispose();
+                        freeRoomsFrame.getBtnApply().addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Client client = ManagerDAO.getInstance().getClientByID(settleClientFrame.getSelectedID());
+                                Room room = ManagerDAO.getInstance().getRoomByNum(freeRoomsFrame.getSelectedID());
+                                ManagerDAO.getInstance().addClientToRoom(client, room, days);
+                                JOptionPane.showMessageDialog(freeRoomsFrame, client.getFirstname() + " " + client.getLastname()
+                                        + " settled!", "Client settled!", JOptionPane.INFORMATION_MESSAGE);
+                                freeRoomsFrame.dispose();
+                                settleClientFrame.dispose();
+                            }
+                        });
                     }
                 });
+
             }
         }
     }
