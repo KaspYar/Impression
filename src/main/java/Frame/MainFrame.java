@@ -16,7 +16,7 @@ public class MainFrame extends JFrame{
     private JButton btnAddClient;
     private JButton btnPayments;
     private JButton btnGetFree;
-    private JButton roomBooking;
+    private JButton btnCheckBooking;
 
     public MainFrame(){
         super("Hotel \"Impression\"");
@@ -36,6 +36,7 @@ public class MainFrame extends JFrame{
         btnSettleClient.addActionListener(l);
         btnPayments.addActionListener(l);
         btnGetFree.addActionListener(l);
+        btnCheckBooking.addActionListener(l);
     }
     public JButton getBtnSetFree() {
         return btnSetFree;
@@ -56,5 +57,9 @@ public class MainFrame extends JFrame{
 
     public JButton getBtnPayments() {
         return btnPayments;
+    }
+
+    public JButton getBtnCheckBooking() {
+        return btnCheckBooking;
     }
 }

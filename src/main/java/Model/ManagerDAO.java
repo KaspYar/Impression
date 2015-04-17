@@ -84,6 +84,11 @@ public class ManagerDAO implements IClientDAO, IRoomDAO, IBookingDAO, IPaymentDA
     }
 
     @Override
+    public Booking getBookingByClientId(int clientID) {
+        return bookingDAO.getBookingByClientId(clientID);
+    }
+
+    @Override
     public List<Payment> getPayment(Client client) throws SQLException {
         return this.paymentDAO.getPayment(client);
     }

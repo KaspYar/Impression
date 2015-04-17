@@ -57,4 +57,26 @@ public class ImplBookingDAO implements IBookingDAO {
         }
         return result;
     }
+
+    @Override
+    public Booking getBookingByClientId(int clientID) {
+        Booking result=null;
+        String query = "SELECT clientCard, dateFrom, dateTo FROM Booking WHERE clientCard = ?";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, clientID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+              result = new Booking();
+              result.setClientCard(resultSet.getInt(1));
+              result.setDateFrom(resultSet.getDate(2));
+              result.setDateTo(resultSet.getDate(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

@@ -14,4 +14,5 @@ import java.util.List;
 public interface IBookingDAO {
     public void cancelBooking(Booking booking) throws SQLException;
     public List<Booking> getPaymentBooking(Client client) throws SQLException;
+    Booking getBookingByClientId(int clientID);
 }

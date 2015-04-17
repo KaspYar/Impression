@@ -1,6 +1,7 @@
 package Controller;
 
 import Frame.*;
+import Hotel.Booking;
 import Hotel.Client;
 import Hotel.Room;
 import Model.ManagerDAO;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -27,6 +29,7 @@ public class Controller {
     private FreeRoomForToday freeRoomForToday;
     private FreeRoomsFrame freeRoomsFrame;
     private DaysFrame daysFrame;
+    private CheckBookingFrame checkBookingFrame;
 
     public Controller(MainFrame mc) {
         this.frame = mc;
@@ -54,6 +57,9 @@ public class Controller {
             if (source == frame.getBtnSettleClient()) {
                 settleClientFrame = new SettleClientFrame();
                 settleClientFrame.addListener(new assignClientToRoom());
+            }
+            if (source == frame.getBtnCheckBooking()){
+                checkBookingFrame = new CheckBookingFrame();
             }
             if (source == frame.getBtnPayments()){
                 log.info("get payments");
@@ -89,11 +95,11 @@ public class Controller {
             if (source == freeRoomForToday.getComboBox1()){
                 Room selectedRoom = (Room) freeRoomForToday.getLst().get(freeRoomForToday.getComboBox1().getSelectedIndex());
                         freeRoomForToday.getTextArea1().setText(
-                        "Room #" + selectedRoom.getRoomNum()+
-                                "\nLevel: "+selectedRoom.getLevel()+
-                                "\nRoom type: "+selectedRoom.getRoomType()+
-                                "\nPrice: "+selectedRoom.getPrice()+"$"
-                );
+                                "Room #" + selectedRoom.getRoomNum() +
+                                        "\nLevel: " + selectedRoom.getLevel() +
+                                        "\nRoom type: " + selectedRoom.getRoomType() +
+                                        "\nPrice: " + selectedRoom.getPrice() + "$"
+                        );
 
             }
         }
